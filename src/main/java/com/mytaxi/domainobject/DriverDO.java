@@ -1,27 +1,22 @@
 package com.mytaxi.domainobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mytaxi.domainvalue.GeoCoordinate;
 import com.mytaxi.domainvalue.OnlineStatus;
+
 import java.time.ZonedDateTime;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import java.util.Set;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(
-    name = "driver",
-    uniqueConstraints = @UniqueConstraint(name = "uc_username", columnNames = {"username"})
+        name = "driver",
+        uniqueConstraints = @UniqueConstraint(name = "uc_username", columnNames = {"username"})
 )
-public class DriverDO
-{
+public class DriverDO {
 
     @Id
     @GeneratedValue
@@ -53,14 +48,14 @@ public class DriverDO
     @Column(nullable = false)
     private OnlineStatus onlineStatus;
 
+    @OneToMany(mappedBy = "driver")
+    @JsonIgnore
+    private Set<CarDO> selectedCars;
 
-    private DriverDO()
-    {
-    }
+    private DriverDO() { }
 
 
-    public DriverDO(String username, String password)
-    {
+    public DriverDO(String username, String password) {
         this.username = username;
         this.password = password;
         this.deleted = false;
@@ -70,64 +65,57 @@ public class DriverDO
     }
 
 
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
 
-    public String getUsername()
-    {
+    public String getUsername() {
         return username;
     }
 
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
 
-    public Boolean getDeleted()
-    {
+    public Boolean getDeleted() {
         return deleted;
     }
 
 
-    public void setDeleted(Boolean deleted)
-    {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 
 
-    public OnlineStatus getOnlineStatus()
-    {
+    public OnlineStatus getOnlineStatus() {
         return onlineStatus;
     }
 
 
-    public void setOnlineStatus(OnlineStatus onlineStatus)
-    {
+    public void setOnlineStatus(OnlineStatus onlineStatus) {
         this.onlineStatus = onlineStatus;
     }
 
 
-    public GeoCoordinate getCoordinate()
-    {
+    public GeoCoordinate getCoordinate() {
         return coordinate;
     }
 
 
-    public void setCoordinate(GeoCoordinate coordinate)
-    {
+    public void setCoordinate(GeoCoordinate coordinate) {
         this.coordinate = coordinate;
         this.dateCoordinateUpdated = ZonedDateTime.now();
     }
 
+    public Set<CarDO> getSelectedCars() {   return selectedCars; }
+
+    public void setSelectedCars(Set<CarDO> selectedCars) {   this.selectedCars = selectedCars;  }
 }

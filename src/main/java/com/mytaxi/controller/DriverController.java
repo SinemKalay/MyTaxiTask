@@ -79,4 +79,11 @@ public class DriverController
     {
         return DriverMapper.makeDriverDTOList(driverService.find(onlineStatus));
     }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public DriverDTO selectCar(@Valid @RequestBody DriverDTO driverDTO) throws ConstraintsViolationException
+    {
+        return null;
+    }
 }
