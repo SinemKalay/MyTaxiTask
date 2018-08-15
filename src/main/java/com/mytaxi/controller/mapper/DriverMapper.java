@@ -11,7 +11,7 @@ public class DriverMapper
 {
     public static DriverDO makeDriverDO(DriverDTO driverDTO)
     {
-        return new DriverDO(driverDTO.getUsername(), driverDTO.getPassword());
+        return new DriverDO(driverDTO.getUsername(), driverDTO.getPassword(), driverDTO.getOnlineStatus(), driverDTO.getSelectedCars());
     }
 
 
@@ -20,7 +20,9 @@ public class DriverMapper
         DriverDTO.DriverDTOBuilder driverDTOBuilder = DriverDTO.newBuilder()
             .setId(driverDO.getId())
             .setPassword(driverDO.getPassword())
-            .setUsername(driverDO.getUsername());
+            .setUsername(driverDO.getUsername())
+            .setOnlineStatus(driverDO.getOnlineStatus())
+            .setSelectedCars(driverDO.getSelectedCars());
 
         GeoCoordinate coordinate = driverDO.getCoordinate();
         if (coordinate != null)
